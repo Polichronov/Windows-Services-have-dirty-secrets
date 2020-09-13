@@ -1,0 +1,13 @@
+{
+  "profiles": {
+    "Demo4WorkerHangfire": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "DOTNET_ENVIRONMENT": "Development"
+      }
+    },
+    "Docker": {
+      "commandName": "Docker"
+    }
+  }
+}
