@@ -16,9 +16,10 @@ namespace Demo1
                 new Demo1()
             };
 
-            //ServiceBase.Run(servicesToRun);
+            ServiceBase.Run(servicesToRun);
 
-            InteractiveStart(args, servicesToRun);
+            //InteractiveStart(args, servicesToRun);
+
         }
 
         private static void InteractiveStart(string[] args, ServiceBase[] servicesToRun)

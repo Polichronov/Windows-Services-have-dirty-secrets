@@ -15,28 +15,50 @@ namespace Demo2Topshelf
                 x.StartAutomatically();
                 x.RunAsLocalSystem();
             });
+
+
+            //HostFactory.Run(serviceConfig =>
+            //{
+            //    serviceConfig.Service<CustomService>(s =>
+            //    {
+            //        s.ConstructUsing(
+            //            () => new CustomService());
+
+            //        s.WhenStarted(
+            //            execute => execute.Start());
+
+            //        s.WhenStopped(
+            //            execute => execute.Stop());
+            //    });
+
+            //    serviceConfig.EnableServiceRecovery(recoveryOption =>
+            //    {
+            //        recoveryOption.RestartService(1);
+            //        recoveryOption.RestartComputer(60, "PS Demo");
+            //        recoveryOption.RunProgram(5,
+            //            @"c:\someprogram.exe");
+            //    });
+
+            //    serviceConfig.SetServiceName("AwesomeFileConverter");
+            //    serviceConfig.SetDisplayName("Awesome File Converter");
+            //    serviceConfig.SetDescription("A Pluralsight demo service");
+
+            //    serviceConfig.StartAutomatically();
+            //});
         }
-    }   
+    }
+   
 
     public class ServiceControlService : ServiceControl
     {
-        private const string _logFileLocation = @"C:\temp\servicelog.txt";
-
-        private void Log(string logMessage)
-        {
-            //Directory.CreateDirectory(Path.GetDirectoryName(_logFileLocation));
-            //File.AppendAllText(_logFileLocation, DateTime.UtcNow.ToString() + " : " + logMessage + Environment.NewLine);
-        }
 
         public bool Start(HostControl hostControl)
         {
-            Log("Starting");
             return true;
         }
 
         public bool Stop(HostControl hostControl)
         {
-            Log("Stopping");
             return true;
         }
     }
