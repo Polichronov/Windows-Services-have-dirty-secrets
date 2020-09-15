@@ -1,11 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Demo4.UI.Models;
+using Hangfire;
+using Demo4.Hangfire.Common.JobInterfaces;
+using System;
 
 namespace Demo4.UI.Controllers
 {
@@ -20,6 +19,8 @@ namespace Demo4.UI.Controllers
 
         public IActionResult Index()
         {
+            RecurringJob.AddOrUpdate<IPublisherJob>(new Guid().ToString(), x => x.Execute(), Cron.Minutely(), null);
+
             return View();
         }
 

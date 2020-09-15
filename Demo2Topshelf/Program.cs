@@ -1,3 +1,4 @@
+using Demo2;
 using System;
 using Topshelf;
 
@@ -39,27 +40,12 @@ namespace Demo2Topshelf
             //            @"c:\someprogram.exe");
             //    });
 
-            //    serviceConfig.SetServiceName("AwesomeFileConverter");
-            //    serviceConfig.SetDisplayName("Awesome File Converter");
-            //    serviceConfig.SetDescription("A Pluralsight demo service");
+            //    serviceConfig.SetServiceName("ServiceTopshell");
+            //    serviceConfig.SetDisplayName("ServiceTopshell");
+            //    serviceConfig.SetDescription("Dev bg demo service");
 
             //    serviceConfig.StartAutomatically();
             //});
-        }
-    }
-   
-
-    public class ServiceControlService : ServiceControl
-    {
-
-        public bool Start(HostControl hostControl)
-        {
-            return true;
-        }
-
-        public bool Stop(HostControl hostControl)
-        {
-            return true;
         }
     }
 }

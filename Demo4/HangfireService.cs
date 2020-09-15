@@ -7,7 +7,7 @@ using Topshelf;
 
 namespace Demo4
 {
-    internal class HangfireService : ServiceControl
+    internal class HangfireService
     {
         private BackgroundJobServer _server;
         private BackgroundJobServerOptions _options;
@@ -22,7 +22,7 @@ namespace Demo4
                 .UseSqlServerStorage("Server =.; Database = HangfireTest; Integrated Security = SSPI;", new SqlServerStorageOptions
                 {
                     CommandBatchMaxTimeout = TimeSpan.FromMinutes(5),
-                    SlidingInvisibilityTimeout = TimeSpan.FromMinutes(5),
+                    SlidingInvisibilityTimeout = TimeSpan.FromMinutes(5),//algo to get meessages without trasactions
                     QueuePollInterval = TimeSpan.Zero,
                     UseRecommendedIsolationLevel = true,
                     UsePageLocksOnDequeue = true
@@ -32,7 +32,7 @@ namespace Demo4
             if (Environment.UserInteractive)
                 config.UseColouredConsoleLogProvider(LogLevel.Debug);
 
-            //GlobalJobFilters.Filters.Add(new AutomaticRetryAttribute
+            //GlobalJobFilters.Filters.Add(new CustomRetryFilter
             //{
             //    Attempts = 15,
             //    DelaysInSeconds = new[] { 60 },
@@ -56,8 +56,6 @@ namespace Demo4
 
         public void Start()
         {
-            //RecurringJob.AddOrUpdate<IPublisherJob>("", x => x.Execute(), Cron.Minutely(), null);
-
             _server = new BackgroundJobServer(_options);
 
         }
@@ -65,11 +63,6 @@ namespace Demo4
         public void Stop()
         {
             _server.Dispose();
-        }
-        public bool Stop(HostControl hostControl)
-        {
-            _server.Dispose();
-            return true;
         }
     }
 }

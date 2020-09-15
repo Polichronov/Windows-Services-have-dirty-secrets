@@ -14,8 +14,9 @@ namespace Demo3Worker
                 Host.CreateDefaultBuilder(args)
                      .ConfigureServices((hostContext, services) =>
                      {
+                         services.AddHostedService<NewBackgroundWorker>();
                          services.AddHostedService<Worker>();
                      })
-                         .UseWindowsService();
+                     .UseWindowsService();
     }
 }
