@@ -4,7 +4,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Hangfire;
-using Demo4.UI.Controllers;
+using Demo4.Hangfire.Common.JobInterfaces;
+using Demo4.Jobs;
 
 namespace Demo4.UI
 {
@@ -20,9 +21,9 @@ namespace Demo4.UI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddHangfire(x => x.UseSqlServerStorage("Server =.; Database = HangfireTest; Integrated Security = SSPI;"));
-            services.AddHangfireServer();
             services.AddMvc();
+            services.AddScoped<IPublisherJob, PublisherJob>();
+            services.AddHangfire(x => x.UseSqlServerStorage("Server =.; Database = HangfireTest; Integrated Security = SSPI;"));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -50,6 +51,7 @@ namespace Demo4.UI
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
 
+            //GlobalConfiguration.Configuration.UseAutofacActivator(builder.Build());
             // Map Dashboard to the `http://<your-app>/hangfire` URL.
             app.UseHangfireDashboard();
         }

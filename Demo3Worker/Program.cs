@@ -10,17 +10,12 @@ namespace Demo3Worker
             CreateHostBuilder(args).Build().Run();
         }
 
-        //static async Task Main(string[] args)
-        //{
-        //    await CreateHostBuilder(args).RunConsoleAsync();
-        //}
-
         public static IHostBuilder CreateHostBuilder(string[] args) =>
-    Host.CreateDefaultBuilder(args)
-        .ConfigureServices((hostContext, services) =>
-        {
-            services.AddHostedService<Worker>();
-        })
-            .UseWindowsService();
+                Host.CreateDefaultBuilder(args)
+                     .ConfigureServices((hostContext, services) =>
+                     {
+                         services.AddHostedService<Worker>();
+                     })
+                         .UseWindowsService();
     }
 }

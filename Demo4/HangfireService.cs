@@ -1,5 +1,4 @@
 using Autofac;
-using Demo4.Hangfire.Common.JobInterfaces;
 using Hangfire;
 using Hangfire.Logging;
 using Hangfire.SqlServer;
@@ -57,7 +56,7 @@ namespace Demo4
 
         public void Start()
         {
-            RecurringJob.AddOrUpdate<IPublisherJob>("", x => x.Execute(), Cron.Minutely(), null);
+            //RecurringJob.AddOrUpdate<IPublisherJob>("", x => x.Execute(), Cron.Minutely(), null);
 
             _server = new BackgroundJobServer(_options);
 

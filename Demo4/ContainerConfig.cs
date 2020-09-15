@@ -1,9 +1,6 @@
 using Autofac;
 using Demo4.Hangfire.Common.JobInterfaces;
-using System;
-using System.Collections.Generic;
 using System.Reflection;
-using System.Text;
 
 namespace Demo4
 {

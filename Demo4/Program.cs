@@ -8,44 +8,36 @@ namespace Demo4
     {
         static void Main(string[] args)
         {
-            try
+            if (Environment.UserInteractive)
             {
-                if (Environment.UserInteractive)
-                {
-                    var HangfireService = new HangfireService();
-                    HangfireService.Start();
-                    Console.WriteLine("BackgroundJobsRunner service started. Press any key to exit...");
+                var HangfireService = new HangfireService();
+                HangfireService.Start();
+                Console.WriteLine("BackgroundJobsRunner service started. Press any key to exit...");
 
-                    while (true)
+                while (true)
+                {
+                    Thread.Sleep(10000);
+                }
+            }
+            else
+            {
+                HostFactory.Run(windowsService =>
                     {
-                        Thread.Sleep(10000);
-                    }
-                }
-                else
-                {
-                    HostFactory.Run(windowsService =>
+                        windowsService.Service<HangfireService>(s =>
                         {
-                            windowsService.Service<HangfireService>(s =>
-                            {
-                                s.ConstructUsing(service => new HangfireService());
-                                s.WhenStarted(service => service.Start());
-                                s.WhenStopped(service => service.Stop());
-                            });
-
-                            windowsService.RunAsLocalSystem();
-                            windowsService.StartAutomatically();
-
-                            windowsService.SetDescription("ServiceHangfire");
-                            windowsService.SetDisplayName("ServiceHangfire");
-                            windowsService.SetServiceName("ServiceHangfire");
+                            s.ConstructUsing(service => new HangfireService());
+                            s.WhenStarted(service => service.Start());
+                            s.WhenStopped(service => service.Stop());
                         });
-                }
-            }
-            catch(Exception ex)
-            {
-                var p = ex;
-            }
 
+                        windowsService.RunAsLocalSystem();
+                        windowsService.StartAutomatically();
+
+                        windowsService.SetDescription("ServiceHangfire");
+                        windowsService.SetDisplayName("ServiceHangfire");
+                        windowsService.SetServiceName("ServiceHangfire");
+                    });
+            }
         }
     }
 }
